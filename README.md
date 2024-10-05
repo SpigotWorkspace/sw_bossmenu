@@ -13,7 +13,7 @@ Bossmenu for ESX jobs
 - [oxmysql](https://github.com/overextended/oxmysql)
 
 ### Installation
-To ensure that withdrawals and deposits to the faction account work correctly, changes must be made in the `esx_society/main.lua` file. Follow these steps: 
+To ensure that withdrawals and deposits to the society account work correctly, changes must be made in the `esx_society/main.lua` file. Follow these steps: 
 <br><h3>Change line 67</h3>
 Replace the existing line:
 ```lua
