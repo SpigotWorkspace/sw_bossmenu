@@ -1,5 +1,5 @@
 
-<h1 align="center">[ESX] sw_bosmenu</h3>
+<h1 align="center">[ESX] sw_bossmenu</h3>
 Bossmenu for ESX jobs
 
 ### Features
