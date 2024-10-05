@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="de" data-bss-forced-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Fraktionsverwaltung</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/darkly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/FontAwesome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/css/style.css">
+    <link rel="stylesheet" href="assets/css/css/Sidebar-Menu-sidebar.css">
+    <link rel="stylesheet" href="assets/css/css/Sidebar-Menu.css">
+    <link rel="stylesheet" href="assets/css/css/Table-With-Search-search-table.css">
+    <link rel="stylesheet" href="assets/css/css/Table-With-Search.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <ul id="sidebar-nav" class="sidebar-nav">
+                    <li class="sidebar-brand" data-locale="sidebar_title"></li>
+                    <p id="sidebar-subtitle" class="sidebar-subtitle"></p>
+                    <li> <button class="sidebar-button" data-right="manageEmployees" data-locale="button_manage_employees" onclick="switchSite('overview', this)"></button></li>
+                    <li> <button class="sidebar-button" data-right="hirePlayer" data-locale="button_hire_player" onclick="switchSite('hire', this)"></button></li>
+                    <li> <button class="sidebar-button" data-right="withdrawMoney depositMoney" data-locale="button_society_account" onclick="switchSite('account', this)"></button></li>
+                </ul>
+            </div>
+            <div class="page-content-wrapper">
+                <div class="container-fluid"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle"><i class="fas fa-bars"></i></a>
+                    <div class="row ui-page-overview">
+                        <div class="col-md-12 search-table-col">
+                            <div class="form-group pull-right col-lg-4"><input id="search_input" type="text" class="search form-control" style="--bs-body-bg:#222;"></div>
+                            <div class="table-responsive table table-hover table-bordered results">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="bill-header cs">
+                                        <tr>
+                                            <th class="col-lg" id="trs-hd-1" data-locale="th_firstname"></th>
+                                            <th class="col-lg" id="trs-hd-2" data-locale="th_lastname"></th>
+                                            <th class="col-lg" id="trs-hd-3" data-locale="th_rank"></th>
+                                            <th class="col-lg" id="trs-hd-6" data-locale="th_actions"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="modal fade show" role="dialog" tabindex="-1" id="fireConfirmationDialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" data-locale="fire_dialog_title"></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p id="modal-content-fire-p"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-light" data-locale="button_cancel" onclick="modalDialogAction('cancel', 'fire')"></button>
+                                            <button class="btn btn-primary" data-locale="button_confirm" onclick="modalDialogAction('confirm', 'fire')"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ui-page-hire">
+                        <div class="col">
+                            <div class="col-md-12 search-table-col">
+                                <div class="table-responsive table table-hover table-bordered results">
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="bill-header cs">
+                                            <tr>
+                                                <th class="col-lg" data-locale="th_firstname" id="trs-hd-1">Vorname</th>
+                                                <th class="col-lg" data-locale="th_lastname" id="trs-hd-2">Nachname</th>
+                                                <th class="col-lg" data-locale="th_actions" id="trs-hd-6">Aktionen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body-hire"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="modal fade show" role="dialog" tabindex="-1" id="hireConfirmationDialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" data-locale="hire_dialog_title"></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p id="modal-content-hire-p"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-light" data-locale="button_cancel" onclick="modalDialogAction('cancel', 'hire')"></button>
+                                            <button class="btn btn-primary" data-locale="button_confirm" onclick="modalDialogAction('confirm', 'hire')"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ui-page-account">
+                        <div class="col">
+                            <p><i class="fa-solid fa-building-columns" style="color: rgb(56,186,24);"></i> <span data-locale="balance">Kontostand:</span> <span id="balance-span" style="font-weight: bold;">0</span></p>
+                            <button class="btn btn-deposit" data-right="depositMoney" data-locale="deposit" onclick="openSocietyInputDialog('deposit')"></button>
+                            <button class="btn btn-withdraw" data-right="withdrawMoney" data-locale="withdraw" onclick="openSocietyInputDialog('withdraw')"></button>
+                        </div>
+                        <div class="col">
+                            <div class="modal fade show" role="dialog" tabindex="-1" id="societyInputDialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 id="modal-title-society" class="modal-title"></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p id="modal-content-society-p"></p>
+                                            <input id="society-amount-input" class="modal-input" type="text" oninput="this.value = 
+                                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-light" data-locale="button_cancel" onclick="modalDialogAction('cancel', 'society')">Abbrechen</button>
+                                            <button class="btn btn-primary" data-locale="button_confirm" onclick="modalDialogAction('confirm', 'society')">Bestätigen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/js/Sidebar-Menu-sidebar.js"></script>
+    <script src="assets/js/js/Table-With-Search-search-table.js"></script>
+</body>
+
+</html>

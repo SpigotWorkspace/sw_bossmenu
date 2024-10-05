@@ -1,0 +1,100 @@
+* {
+  user-select: none;
+}
+
+.site {
+  background-color: black;
+  display: none;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+}
+
+.sidebar-button {
+  color: rgb(153, 153, 153);
+  border: none;
+  background-color: transparent;
+}
+
+.sidebar-button.selected {
+  font-weight: bold;
+  color: rgb(235, 230, 230);
+}
+
+[class^="row ui-page-"] {
+  display: none;
+}
+
+#table-body tr {
+  border-bottom: 1px solid rgb(153, 153, 153);
+}
+
+#table-body-hire tr {
+  border-bottom: 1px solid rgb(153, 153, 153);
+}
+
+.modal-content-span {
+  color: rgb(153, 153, 153);
+}
+
+#container {
+  position: absolute;
+}
+
+body {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+input[class="modal-input"] {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.165);
+  color: white;
+}
+
+.modal-input:focus {
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.165);
+  color: white;
+}
+
+.btn-promote {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #00bc8c;
+  --bs-btn-hover-bg: #00a077;
+}
+
+.btn-demote {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #e38075;
+  --bs-btn-hover-bg: #c8665b;
+}
+
+.btn-fire {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #e74c3c;
+  --bs-btn-hover-bg: #c44133;
+}
+
+.btn-deposit {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #00bc8c;
+  --bs-btn-hover-bg: #00a077;
+}
+
+.btn-withdraw {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #e38075;
+  --bs-btn-hover-bg: #c8665b;
+}
+
+#balance-span {
+  font-weight: bold;
+  color: rgb(56,186,24)
+}
+
