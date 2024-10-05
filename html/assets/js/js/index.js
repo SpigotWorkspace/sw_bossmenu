@@ -129,9 +129,9 @@ function openSocietyInputDialog(type) {
     let text = '';
     this.societyActionType = type
     if (type == 'deposit') {
-        text = 'Einzahlen'
+        text = translate('deposit')
     } else if(type == 'withdraw') {
-        text = 'Auszahlen'
+        text = translate('withdraw')
     }
     $("#modal-title-society").html(formatString(translate('society_dialog_title'), {type: text}))
     $("#modal-content-society-p").html(formatString(translate('society_dialog_content'), {type: text.toLowerCase()}))
