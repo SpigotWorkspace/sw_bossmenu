@@ -24,7 +24,7 @@ end
 with:
 ```lua
 local allowed = exports["sw_bossmenu"]:IsAllowed(xPlayer, 'withdrawMoney')
-if xPlayer.job.name ~= society.name or not allowed then
+if xPlayer.job.name ~= society.name and not allowed then
     return print(('[^3WARNING^7] Player ^5%s^7 attempted to withdraw from society - ^5%s^7!'):format(source, society.name))
 end
 ```
@@ -39,7 +39,7 @@ end
 with:
 ```lua
 local allowed = exports["sw_bossmenu"]:IsAllowed(xPlayer, 'depositMoney')
-if xPlayer.job.name ~= society.name or not allowed then
+if xPlayer.job.name ~= society.name and not allowed then
     return print(('[^3WARNING^7] Player ^5%s^7 attempted to deposit to society - ^5%s^7!'):format(source, society.name))
 end
 ```

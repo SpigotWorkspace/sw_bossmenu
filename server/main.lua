@@ -26,7 +26,7 @@ ESX.RegisterServerCallback('sw_bossmenu:getData', function (source, cb, job, adm
     data.jobLabel = esxJobData.label
     data.allowedFeatures = allowedFeatures
 
-    local identifier = GetPlayerIdentifierByType(xPlayer.source, "license"):gsub("license:", "")
+    local identifier = GetIdentifier(xPlayer.source)
     openMenus[identifier] = adminMode
     cb(true, data)
 end)
@@ -34,16 +34,16 @@ end)
 
 ESX.RegisterServerCallback('sw_bossmenu:getEmployees', function (source, cb, job)
     local xPlayer = ESX.GetPlayerFromId(source)
-    local jobData = xPlayer.getJob()
     local jobs = ESX.GetJobs()
     local esxJobData = jobs[job]
     local grades = esxJobData["grades"]
     local highestGrade = ESX.Table.SizeOf(grades)
 
-    local identifier = GetPlayerIdentifierByType(xPlayer.source, "license"):gsub("license:", "")
+    local identifier = GetIdentifier(xPlayer.source)
     local adminMode = openMenus[identifier]
 
     if not adminMode then
+        local jobData = xPlayer.getJob()
         if jobData.name ~= job then
             --punish
             return cb(false)
@@ -102,6 +102,10 @@ end)
 
 ESX.RegisterServerCallback('sw_bossmenu:getPlayersInArea', function (source, cb, serverIds)
     local data = {}
+    local allowed = IsAllowed(xPlayer, 'hirePlayer')
+    if not allowed then
+        return cb(data)
+    end
     for _, id in pairs(serverIds) do
         local xTarget = ESX.GetPlayerFromId(id)
         if xTarget.getJob().name == 'unemployed' then
@@ -119,7 +123,7 @@ ESX.RegisterServerCallback('sw_bossmenu:hirePlayer', function (source, cb, ident
     local xPlayer = ESX.GetPlayerFromId(source)
     local xTarget = ESX.GetPlayerFromIdentifier(identifier)
     local allowed = IsAllowed(xPlayer, 'hirePlayer')
-    if allowed then
+    if allowed and xTarget.getJob().name == 'unemployed' then
         xTarget.setJob(xPlayer.getJob().name, 0)
         cb(true)
         return
@@ -133,6 +137,8 @@ ESX.RegisterServerCallback('sw_bossmenu:onAction', function (source, cb, data)
     local action = data.action
     local targetIdentifier = data.identifier
     local xPlayer = ESX.GetPlayerFromId(source)
+    local identifier = GetIdentifier(xPlayer.source)
+    local adminMode = openMenus[identifier]
     local jobData = xPlayer.getJob()
 
     if xPlayer.getIdentifier == identifier then cb(false) return end
@@ -140,11 +146,14 @@ ESX.RegisterServerCallback('sw_bossmenu:onAction', function (source, cb, data)
     if not allowed then cb(false) return end
 
     local highestGrade = jobData.grade
+    if adminMode then
+        highestGrade = -1
+    end
 
     GetJobData(targetIdentifier, function (targetJobData)
         local targetJob = targetJobData.job
         local targetGrade = targetJobData.grade
-        if jobData.name ~= targetJob or targetGrade == highestGrade then return end
+        if (jobData.name ~= targetJob and not adminMode) or targetGrade == highestGrade then return end
         if action == 'promote' then
             local nextGrade = targetGrade + 1
             if nextGrade == highestGrade then return end
@@ -197,7 +206,7 @@ function SetGrade(identifier, job, grade, cb)
 end
 
 function IsAllowed(xPlayer, action) 
-    local identifier = GetPlayerIdentifierByType(xPlayer.source, "license"):gsub("license:", "")
+    local identifier = GetIdentifier(xPlayer.source)
     local adminMode = openMenus[identifier]
     if adminMode then
         return Config.AllowedIdentifiers[identifier][action] or {}
@@ -209,12 +218,16 @@ end
 
 function GetAllowedFeatures(xPlayer, adminMode)
     if adminMode then
-        local identifier = GetPlayerIdentifierByType(xPlayer.source, "license"):gsub("license:", "")
+        local identifier = GetIdentifier(xPlayer.source)
         return Config.AllowedIdentifiers[identifier] or {}
     else
         local jobData = xPlayer.getJob()
         return Config.AllowedGrades[jobData.name][jobData.grade_name] or {}
     end
+end
+
+function GetIdentifier(source)
+    return GetPlayerIdentifierByType(source, "license"):gsub("license:", "")
 end
 
 exports('IsAllowed', IsAllowed)
