@@ -210,8 +210,8 @@ document.onkeydown = (event) => {
 function setLabels() {
     if (!labelsSet) {
         $('[data-locale]').each(function() {
-            const locale = $(this).data('locale'); // Holen des Wertes des data-attributs
-            $(this).html(translate(locale)); // Inhalt ersetzen
+            const locale = $(this).data('locale');
+            $(this).html(translate(locale));
         });
 
         $("#search_input").attr('placeholder', translate("search_input_placeholder"))
